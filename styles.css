@@ -953,16 +953,22 @@ p {
     }
 
     .hero-decoration {
-        bottom: 20px;
+        bottom: 30px;
     }
 
     .hero-logomark {
-        width: 100px;
+        width: 70px;
+    }
+
+    .hero-trust {
+        font-size: 0.7rem;
+        max-width: 200px;
+        text-align: center;
     }
 
     .hero::after {
-        height: 200px;
-        bottom: -100px;
+        height: 300px;
+        bottom: -120px;
     }
 
     .about-grid {
