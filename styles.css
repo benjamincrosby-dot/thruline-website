@@ -39,6 +39,17 @@
     --transition: all 0.3s ease;
 }
 
+/* Red Star */
+.red-star {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 48px;
+    color: #e53935;
+    z-index: 1001;
+    line-height: 1;
+}
+
 /* Reset & Base Styles */
 *, *::before, *::after {
     box-sizing: border-box;
