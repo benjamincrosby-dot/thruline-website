@@ -896,8 +896,8 @@ p {
 
 /* Responsive Design */
 
-/* Laptop screens with shorter viewports (MacBook Air 13", etc.) */
-@media (min-width: 769px) and (max-height: 850px) {
+/* Laptop screens with shorter viewports (MacBook Air 13", 1600x900, etc.) */
+@media (min-width: 769px) and (max-height: 920px) {
     .hero {
         min-height: auto;
         padding: 160px 2rem 280px;
