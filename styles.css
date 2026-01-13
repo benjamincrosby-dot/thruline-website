@@ -317,7 +317,7 @@ p {
 .hero-decoration {
     position: absolute;
     bottom: 50px;
-    left: calc(50% + 5px);
+    left: calc(50% + 15px);
     transform: translateX(-50%);
     z-index: 3;
     display: flex;
