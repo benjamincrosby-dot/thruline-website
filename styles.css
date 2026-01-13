@@ -738,7 +738,7 @@ p {
 }
 
 .logo-track img {
-    height: 50px;
+    height: 75px;
     width: auto;
     object-fit: contain;
     opacity: 0.85;
@@ -751,59 +751,71 @@ p {
 
 /* Individual logo sizes for visual balance */
 .logo-track img.logo-ashoka {
-    height: 70px;
+    height: 105px;
 }
 
 .logo-track img.logo-childrens {
-    height: 60px;
+    height: 90px;
 }
 
 .logo-track img.logo-ednovate {
-    height: 55px;
+    height: 83px;
 }
 
 .logo-track img.logo-edvance {
-    height: 50px;
+    height: 75px;
 }
 
 .logo-track img.logo-eos {
-    height: 55px;
+    height: 83px;
 }
 
 .logo-track img.logo-fas {
-    height: 60px;
+    height: 90px;
 }
 
 .logo-track img.logo-giffords {
-    height: 38px;
+    height: 57px;
 }
 
 .logo-track img.logo-hpn {
-    height: 55px;
+    height: 83px;
 }
 
 .logo-track img.logo-localprogress {
-    height: 42px;
+    height: 63px;
 }
 
 .logo-track img.logo-msvotes {
-    height: 45px;
+    height: 68px;
 }
 
 .logo-track img.logo-mwf {
-    height: 50px;
+    height: 75px;
 }
 
 .logo-track img.logo-promise {
-    height: 60px;
+    height: 90px;
 }
 
 .logo-track img.logo-trustees {
-    height: 56px;
+    height: 84px;
 }
 
 .logo-track img.logo-whoi {
-    height: 50px;
+    height: 75px;
+}
+
+.logo-track img.logo-alder {
+    height: 75px;
+}
+
+.logo-track img.logo-nyfc {
+    height: 75px;
+}
+
+.logo-track img.logo-aspire {
+    height: 75px;
 }
 
 @keyframes scroll {
