@@ -72,6 +72,7 @@
                 </ul>
                 <p>Then I compared the consensus estimates as scatter plots (one dot per role). I used R&sup2; as a quick measure of agreement, a 45-degree line (perfect agreement) to show level differences, a fitted regression line to show systematic bias, and outlier labeling to identify which roles drove divergence.</p>
                 <p>This is deliberately not a &ldquo;gotcha&rdquo; test, but a practical question: if you&rsquo;re benchmarking in the real world, does the LLM output behave like market data you already recognize?</p>
+                <img src="images/data-source-range-box-whisker.png" alt="Box and whisker chart: Agreement by data source (P50) across LLMs, comp databases, and paper surveys" class="blog-img">
 
                 <h3>Results: What the Data Showed</h3>
                 <p><strong>1. Paper surveys vs. LLMs: strongest agreement &mdash; R&sup2; = 0.94.</strong> Across roles, LLMs tracked survey-style medians closely. If a role priced higher in surveys, it tended to price higher in LLM outputs too.</p>
@@ -80,7 +81,6 @@
                 <img src="images/paper-survey-vs-database.png" alt="Scatter plot: Paper Survey vs. Database consensus medians" class="blog-img">
                 <p><strong>3. Database-style benchmarks vs. LLMs: weakest agreement &mdash; R&sup2; &asymp; 0.77.</strong> LLMs did not reproduce database-style patterns as reliably, particularly at the senior end.</p>
                 <img src="images/database-vs-llm.png" alt="Scatter plot: Database vs. LLM consensus medians" class="blog-img">
-                <img src="images/data-source-range-box-whisker.png" alt="Box and whisker chart: Agreement by data source (P50) across LLMs, comp databases, and paper surveys" class="blog-img">
                 <p><strong>Where disagreement clustered:</strong> The biggest divergence showed up in executive and top-of-house roles (CEO/ED and CFO equivalents). Mid-level manager and professional roles were more stable across sources.</p>
                 <p><strong>What that pattern usually means in practice:</strong> Executive roles have the highest variance in real life because scope is typically more ambiguous, incentives and total cash conventions vary, and organization-size elasticity is larger. Traditional databases often encode leveling and job architecture conventions in ways that LLM prompting does not consistently capture unless scope is specified very tightly. For example: you will benchmark a &ldquo;VP of Finance&rdquo; differently depending on whether the organization also has a CFO.</p>
 
