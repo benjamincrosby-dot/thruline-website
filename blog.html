@@ -39,6 +39,182 @@
     <!-- Blog Posts -->
     <section class="blog-posts">
         <div class="container">
+            <article class="blog-post" id="llm-benchmarks">
+                <div class="blog-post-date">March 2, 2026</div>
+                <h2>Can LLMs Produce Reliable Market Benchmarks? A Small Pilot Study</h2>
+                <p><em>Question: Can LLMs produce market benchmarks that are reliable enough to inform real compensation decisions (and if so, where does it break down)? Put another way: has AI gotten "good enough" to replace compiled surveys or comp databases?</em></p>
+                <p><strong>TL;DR</strong> In a pilot test using 15 common nonprofit roles scoped to San Francisco nonprofits (25&ndash;50 FTE), LLM-generated market medians tracked &ldquo;paper survey&rdquo; benchmarks closely (high agreement on role ordering and relative differentials), but diverged more from leading national compensation databases, especially for executive roles. In other words, LLMs do a good job ranking pay rates between jobs but are probably less accurate at giving you a true &ldquo;range&rdquo; in the absence of other org context. My recommendation: use LLMs for quick triangulation (&ldquo;do Controller or Sr. Director of Finance typically pay more at Oakland nonprofits?&rdquo;), job-matching sanity checks, and early range development. Do not use them as a single source of truth for pricing decisions, and always calibrate with at least one traditional benchmark source, especially above the director level.</p>
+
+                <h3>Context</h3>
+                <p>If you&rsquo;re a CPO or HR leader, you already know the pain points of market benchmarking:</p>
+                <ul>
+                    <li>Comp databases or surveys are expensive and often sold in bundles</li>
+                    <li>Job matching takes time and still produces &ldquo;depends who you ask&rdquo; answers</li>
+                    <li>Scope and leveling differences can swamp the number you hoped would be definitive</li>
+                    <li>You need something fast enough to support real decisions, but defensible enough to stand up in leadership and comp committee conversations</li>
+                </ul>
+                <p>At the same time, large language models (LLMs) can produce salary benchmarks in seconds. That&rsquo;s both enticing and risky. The real question isn&rsquo;t &ldquo;can an LLM give you a number?&rdquo; It&rsquo;s &ldquo;how accurate are those numbers compared to traditional sources?&rdquo;</p>
+                <p>To explore this, I ran a small pilot comparing LLM-produced market medians to two categories of traditional benchmarking sources:</p>
+                <ul>
+                    <li><strong>Survey-style benchmarks</strong> (compiled survey outputs): I pulled two leading national or regional surveys typically used by Bay Area nonprofits</li>
+                    <li><strong>Database-style benchmarks</strong> (leading national comp databases): I pulled from three widely used national compensation databases</li>
+                </ul>
+                <p>I then ran three LLMs (ChatGPT, Claude, and Gemini) with a consistent market scope: San Francisco/Bay Area, nonprofits, 25&ndash;50 FTE, P50/median pay as the anchor point.</p>
+                <p>See the Appendix below for an example of the data gathered for a &ldquo;Development Manager&rdquo; role.</p>
+                <p>A quick note on language: for the purposes of this analysis, &ldquo;accuracy&rdquo; means &ldquo;agreement with traditional sources under a comparable set of market parameters.&rdquo; In compensation benchmarking, there is rarely a single &ldquo;true&rdquo; number; there are multiple legitimate answers depending on how the cut is defined and how the job is matched.</p>
+
+                <h3>Method in Plain English</h3>
+                <p>For each role, I created &ldquo;consensus&rdquo; estimates to reduce single-source noise:</p>
+                <ul>
+                    <li><strong>LLM consensus:</strong> average of the three LLM medians</li>
+                    <li><strong>Survey consensus:</strong> median of the &ldquo;paper survey&rdquo; medians</li>
+                    <li><strong>Database consensus:</strong> median of the database-style medians</li>
+                </ul>
+                <p>Then I compared the consensus estimates as scatter plots (one dot per role). I used R&sup2; as a quick measure of agreement, a 45-degree line (perfect agreement) to show level differences, a fitted regression line to show systematic bias, and outlier labeling to identify which roles drove divergence.</p>
+                <p>This is deliberately not a &ldquo;gotcha&rdquo; test, but a practical question: if you&rsquo;re benchmarking in the real world, does the LLM output behave like market data you already recognize?</p>
+
+                <h3>Results: What the Data Showed</h3>
+                <p><strong>1. Paper surveys vs. LLMs: strongest agreement &mdash; R&sup2; = 0.94.</strong> Across roles, LLMs tracked survey-style medians closely. If a role priced higher in surveys, it tended to price higher in LLM outputs too.</p>
+                <p><strong>2. Paper surveys vs. database-style benchmarks: solid agreement, more spread &mdash; R&sup2; = 0.88.</strong> Even traditional sources diverged meaningfully, especially as roles moved up-market in scope. This is a useful reminder that benchmarking tools are not interchangeable without careful cut alignment.</p>
+                <p><strong>3. Database-style benchmarks vs. LLMs: weakest agreement &mdash; R&sup2; &asymp; 0.77.</strong> LLMs did not reproduce database-style patterns as reliably, particularly at the senior end.</p>
+                <p><strong>Where disagreement clustered:</strong> The biggest divergence showed up in executive and top-of-house roles (CEO/ED and CFO equivalents). Mid-level manager and professional roles were more stable across sources.</p>
+                <p><strong>What that pattern usually means in practice:</strong> Executive roles have the highest variance in real life because scope is typically more ambiguous, incentives and total cash conventions vary, and organization-size elasticity is larger. Traditional databases often encode leveling and job architecture conventions in ways that LLM prompting does not consistently capture unless scope is specified very tightly. For example: you will benchmark a &ldquo;VP of Finance&rdquo; differently depending on whether the organization also has a CFO.</p>
+
+                <h3>Interpretation: What This (Might) Mean for LLM Accuracy</h3>
+                <p>The headline takeaway is not &ldquo;AI is/is not ready to replace comp databases.&rdquo; The takeaway is: <strong>LLMs can be directionally reliable for benchmarking common roles when scoped well, but they are more fragile than traditional sources when scope and leveling complexity increase.</strong></p>
+                <p><strong>LLMs appear strong on relative pricing.</strong> Across roles, LLM outputs tracked the &ldquo;shape&rdquo; of the market well against survey-style benchmarks. That&rsquo;s useful because many real decisions rely on relative relationships &mdash; questions like:</p>
+                <ul>
+                    <li>Are we preserving reasonable internal differentials?</li>
+                    <li>Does a draft range architecture look broadly aligned with market trends?</li>
+                    <li>Should we post a higher or lower range for a new role compared to an existing one?</li>
+                </ul>
+                <p><strong>LLMs appear weaker on database-style &ldquo;cut fidelity.&rdquo;</strong> Databases behave differently from survey-style sources because they embed specific job-leveling conventions, location factors, sector, org-size, and embedded job-matching logic. LLMs can approximate that, but ultimately they are a &ldquo;black box&rdquo; in the same way that comp databases can be &mdash; with even less insight into the methodology for how that particular number or range was created.</p>
+                <p><strong>Executive roles are the &ldquo;your mileage will vary&rdquo; zone.</strong> If you&rsquo;re a seasoned comp pro, the data in this little pilot study behaved as you might expect: the higher the scope ambiguity, the more sources diverged. If you&rsquo;re setting executive pay, the cost of being wrong is large and the defensibility bar is high. LLMs can help you develop a directional hypothesis about pay rates, but not final decisions. I might use an LLM to get a general sense for &ldquo;Nonprofit CEO pay in Louisville for orgs around $10M,&rdquo; but wouldn&rsquo;t use it for structure design or individual pay decisions.</p>
+
+                <h3>Recommendations for HR Leaders and Consultants</h3>
+                <p><strong>Consider using LLMs for:</strong></p>
+                <ul>
+                    <li>Quick triangulation when you&rsquo;re early in a project</li>
+                    <li>Role definition and job-matching sanity checks, especially when titles are misleading (&ldquo;this role is titled Director but JD reads more like a Manager&rdquo;)</li>
+                    <li>Drafting a first-pass range hypothesis for common roles, to be validated</li>
+                    <li>Identifying where scope questions matter most &mdash; if an LLM &ldquo;range estimate&rdquo; swings a lot when you change a particular variable, it is probably flagging a scoping problem</li>
+                </ul>
+                <p><strong>Do not use LLMs as a single source of truth for:</strong></p>
+                <ul>
+                    <li>Executive compensation ranges or placement decisions</li>
+                    <li>Any situation where you need to defend the benchmark to a board or comp committee</li>
+                    <li>Roles with high scope variability (CFO/Controller, COO, heads of development, heads of product/program) unless you have a tight scope spec and at least one traditional anchor point</li>
+                </ul>
+                <p><strong>How to make LLM benchmarking meaningfully safer:</strong></p>
+                <ul>
+                    <li>Lock the market definition in writing (geo, sector, org size, pay basis) and reuse it verbatim</li>
+                    <li>Run multiple models, not one (e.g., ChatGPT and Claude); look for convergence rather than a single answer</li>
+                    <li>Use the paid version of these tools (free versions are much less reliable)</li>
+                    <li>Calibrate: anchor to one trusted benchmark point from a traditional source, then use LLMs if you need to fill gaps</li>
+                    <li>Treat LLM outputs as hypotheses; test by adjusting one variable at a time to see what&rsquo;s driving the number</li>
+                    <li>Keep an audit trail: prompts used, the assumptions you gave the model, and the outputs along the way</li>
+                    <li>Make sure you&rsquo;ve turned off the &ldquo;use my data for training&rdquo; option in whichever model you use</li>
+                </ul>
+
+                <h3>Closing Thought</h3>
+                <p>LLMs are already useful in benchmarking workflows; the mistake is treating them as a replacement for market data. In my &ldquo;little pilot,&rdquo; they performed surprisingly well against paper survey benchmarks under a defined market cut, and less well against database-style outputs. Unsurprisingly, the gaps were biggest with executive positions &mdash; where identifying the &ldquo;right&rdquo; pay rates are hardest anyway.</p>
+                <p>If you approach LLMs as a speed tool for triangulation and scoping, they might add real value. If you treat them as the final answer, you will eventually get burned &mdash; most likely at the executive level or in roles where scope is ambiguous.</p>
+                <p>If you&rsquo;re thinking through how to integrate LLMs into your benchmarking workflow in a way that&rsquo;s practical and defensible, I&rsquo;m happy to compare notes; this is an area I&rsquo;m actively developing thinking on. <a href="mailto:ben@thrulinecomp.com">ben@thrulinecomp.com</a></p>
+
+                <h3>Appendix: Sample Role Comparison &mdash; Development Manager</h3>
+                <p><em>Market Parameters: San Francisco/Bay Area, Nonprofits, 25&ndash;50 FTE</em></p>
+                <table class="blog-table">
+                    <thead>
+                        <tr>
+                            <th>Source Type</th>
+                            <th>Source (masked)</th>
+                            <th>Market Scope Used</th>
+                            <th>P50 (median)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LLM</td>
+                            <td>ChatGPT</td>
+                            <td>San Francisco; Nonprofit; 25&ndash;50 FTE</td>
+                            <td>$95,000</td>
+                            <td>Prompted to target scope</td>
+                        </tr>
+                        <tr>
+                            <td>LLM</td>
+                            <td>Claude</td>
+                            <td>San Francisco; Nonprofit; 25&ndash;50 FTE</td>
+                            <td>$88,000</td>
+                            <td>Prompted to target scope</td>
+                        </tr>
+                        <tr>
+                            <td>LLM</td>
+                            <td>Gemini</td>
+                            <td>San Francisco; Nonprofit; 25&ndash;50 FTE</td>
+                            <td>$102,000</td>
+                            <td>Prompted to target scope</td>
+                        </tr>
+                        <tr>
+                            <td>Survey-style</td>
+                            <td>Survey A (national nonprofit survey)</td>
+                            <td>Closest available cut</td>
+                            <td>$101,503</td>
+                            <td>Masked source name</td>
+                        </tr>
+                        <tr>
+                            <td>Survey-style</td>
+                            <td>Survey B (regional nonprofit survey)</td>
+                            <td>Closest available cut</td>
+                            <td>$80,000</td>
+                            <td>Masked source name</td>
+                        </tr>
+                        <tr>
+                            <td>Database-style</td>
+                            <td>Comp database 1 (leading national platform)</td>
+                            <td>San Francisco / org-size cut</td>
+                            <td>$141,100</td>
+                            <td>Masked source name</td>
+                        </tr>
+                        <tr>
+                            <td>Database-style</td>
+                            <td>Comp database 2 (leading national platform)</td>
+                            <td>San Francisco / org-size cut</td>
+                            <td>$181,971</td>
+                            <td>Masked source name</td>
+                        </tr>
+                        <tr>
+                            <td>Consensus</td>
+                            <td>LLM average</td>
+                            <td>N/A</td>
+                            <td>$95,000</td>
+                            <td>Average of 3 LLM medians</td>
+                        </tr>
+                        <tr>
+                            <td>Consensus</td>
+                            <td>Survey median</td>
+                            <td>N/A</td>
+                            <td>$90,752</td>
+                            <td>Median of 2 survey-style medians</td>
+                        </tr>
+                        <tr>
+                            <td>Consensus</td>
+                            <td>Database median</td>
+                            <td>N/A</td>
+                            <td>$161,536</td>
+                            <td>Median of 2 database medians</td>
+                        </tr>
+                        <tr>
+                            <td>Spread</td>
+                            <td>Range across all sources</td>
+                            <td>N/A</td>
+                            <td>$101,971</td>
+                            <td>Max minus min across all sources</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
             <article class="blog-post">
                 <div class="blog-post-date">February 25, 2026</div>
                 <h2>Welcome to the Thruline Blog</h2>
