@@ -1217,6 +1217,14 @@ section[id] {
     color: var(--color-primary-light);
 }
 
+.blog-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1rem 0 1.5rem;
+    display: block;
+}
+
 .blog-post h3 {
     color: var(--color-primary);
     font-size: 1.25rem;
