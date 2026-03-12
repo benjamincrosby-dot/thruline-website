@@ -1126,15 +1126,32 @@ section[id] {
 }
 
 /* Blog Styles */
-.blog-hero {
-    padding: 180px 0 60px;
+.header--blog {
+    position: relative;
     background-color: var(--color-yellow);
-    text-align: center;
 }
 
-.blog-hero h1 {
+.header--blog .nav-links a {
     color: var(--color-primary);
-    margin-bottom: 1rem;
+}
+
+.header--blog .nav-links a:hover {
+    color: var(--color-primary-dark);
+    opacity: 1;
+}
+
+.header--blog .mobile-menu-btn span {
+    background-color: var(--color-primary);
+}
+
+.blog-header-title {
+    text-align: center;
+    padding: 1.5rem 2rem 2.5rem;
+}
+
+.blog-header-title h1 {
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
 }
 
 .blog-intro {

@@ -11,10 +11,10 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header header--blog">
         <nav class="nav">
             <a href="index.html" class="logo">
-                <img src="logo-white.png" alt="Thruline Compensation Consulting" class="logo-img">
+                <img src="logo-color.png" alt="Thruline Compensation Consulting" class="logo-img">
             </a>
             <button class="mobile-menu-btn" aria-label="Toggle menu">
                 <span></span>
@@ -26,22 +26,95 @@
                 <li><a href="index.html#get-started" class="nav-cta">Connect</a></li>
             </ul>
         </nav>
-    </header>
-
-    <!-- Blog Hero -->
-    <section class="blog-hero">
-        <div class="container">
-            <h1>Thruline Blog</h1>
-            <p class="blog-intro">Insights on compensation, pay equity, and building fair workplaces.</p>
+        <div class="blog-header-title">
+            <div class="container">
+                <h1>Thruline Blog</h1>
+                <p class="blog-intro">Insights on compensation, pay equity, and building fair workplaces.</p>
+            </div>
         </div>
-    </section>
+    </header>
 
     <!-- Blog Posts -->
     <section class="blog-posts">
         <div class="container">
+            <article class="blog-post" id="llm-salary-variability">
+                <div class="blog-post-date">March 12, 2026</div>
+                <h2><a href="#llm-salary-variability">I Asked Claude to Price a Salary 42 Times. Here&rsquo;s How Wildly the Answers Varied.</a></h2>
+                <p><em>Can you trust AI to tell you if you&rsquo;re underpaid? I ran a structured experiment to find out, and the results should make you think twice before negotiating based on a chatbot&rsquo;s number.</em></p>
+
+                <h3>Headlines Up Front</h3>
+                <ul>
+                    <li><strong>The spread:</strong> Claude&rsquo;s salary midpoint for the same job ranged from $95K to $186K across 42 queries. That&rsquo;s a $91K gap.</li>
+                    <li><strong>Free vs. paid:</strong> The free model (Haiku) had 2.5x more variability than the paid models. Its answers are essentially random.</li>
+                    <li><strong>More detail isn&rsquo;t always better:</strong> Moderately detailed prompts produced the tightest results. Pasting a full job description actually made things worse.</li>
+                    <li><strong>Built-in randomness:</strong> The same prompt, same model, different day produced answers that varied by up to $61K.</li>
+                    <li><strong>Best configuration:</strong> Sonnet 4.6 with org budget, role level, reporting line, and team size returned a perfectly reproducible $115K midpoint.</li>
+                    <li><strong>The takeaway:</strong> AI is a conversation starter for salary research, not a source of truth. Use real compensation survey data for anything defensible.</li>
+                </ul>
+
+                <h3>The Experiment</h3>
+                <p>I tested three versions of Anthropic&rsquo;s Claude (Opus, the most powerful; Sonnet, mid-tier; and Haiku, the free model) on a single question: <strong>What is the market salary range for a Program Manager at a nonprofit in San Francisco?</strong></p>
+                <p>I asked 42 times across 7 progressively detailed prompts and 2 separate sessions per model. Opus and Sonnet ran on my paid account; Haiku on a free burner account. Every session used a fresh incognito window to avoid memory. Same question. Same role. Just varying how much context I gave the AI.</p>
+                <p><strong>The 7 prompts, in order of detail:</strong></p>
+                <ul>
+                    <li><strong>Baseline:</strong> Just the role title and city, &ldquo;What is the market midpoint and salary range for a Program Manager at a nonprofit in San Francisco?&rdquo;</li>
+                    <li><strong>+ Org Budget:</strong> Added &ldquo;$10 million annual operating budget&rdquo;</li>
+                    <li><strong>+ Role Level &amp; Reporting:</strong> Added &ldquo;mid-level, reports to a Director&rdquo;</li>
+                    <li><strong>+ Scope &amp; Staff:</strong> Added &ldquo;manages 3&ndash;5 direct reports, oversees a $1.5M program portfolio&rdquo;</li>
+                    <li><strong>+ Sector Framing &amp; Data Cue:</strong> Added &ldquo;mission-driven nonprofit,&rdquo; &ldquo;nonprofit-specific compensation survey data,&rdquo; and &ldquo;San Francisco cost of labor&rdquo;</li>
+                    <li><strong>+ Bilingual Requirement:</strong> Added &ldquo;strongly preferred bilingual in Spanish or Cantonese&rdquo;</li>
+                    <li><strong>+ Full Job Description:</strong> Pasted a complete, real JD</li>
+                </ul>
+                <p>The question I wanted to answer: <strong>If a typical employee asks Claude &ldquo;Am I being paid fairly,&rdquo; how much should they trust the answer?</strong></p>
+
+                <h3>The Headline Number: How Wrong Could It Be?</h3>
+                <p>Across all 42 responses, the salary midpoint ranged from <strong>$95,000 to $186,000</strong>. That&rsquo;s a <strong>$91,000 spread</strong> for the exact same job.</p>
+                <p>If your actual market salary is $100,000:</p>
+                <ul>
+                    <li><strong>Haiku (free model):</strong> Midpoints from ~$99K to $186K, a potential error of -1% to +86%. That&rsquo;s an $87K spread.</li>
+                    <li><strong>Opus (premium paid model):</strong> ~$97K to $126K, an error range of -3% to +26%. A $29K spread.</li>
+                    <li><strong>Sonnet (mid-tier paid model):</strong> ~$95K to $120K, an error range of -5% to +20%. The tightest spread at $25K.</li>
+                    <li><strong>Best case (right model + right prompt):</strong> A &plusmn;5&ndash;20% range, or $5K to $20K of error.</li>
+                </ul>
+                <p>Even in the best case, Claude&rsquo;s salary estimate is a rough ballpark, not a number you should anchor a negotiation on. It tells whether the posted salary range for a role passes the &ldquo;laugh test&rdquo;, but not whether your current pay is market-competitive.</p>
+                <img src="images/model-variability-by-type.png" alt="Same Job, Same Question: How Much Did the Claude Salary Benchmark Answer Vary?" class="blog-img">
+
+                <h3>What Drives the Variability?</h3>
+                <h4>1. Which model you use matters. A lot.</h4>
+                <p>Sonnet 4.6 was the most reliable: just <strong>7% CV (coefficient of variation, a measure of how spread out the results are)</strong> across all runs, with 3 out of 7 prompts returning identical midpoints across sessions. Opus was close at <strong>8.9% CV</strong> with 3 perfect matches on different prompts.</p>
+                <p>Haiku was a different story: <strong>18% CV</strong>, zero perfect matches, and a worst-case swing of <strong>$61,000</strong> between sessions on the same prompt. If you&rsquo;re using the free tier to check your salary, the number you get is essentially a coin flip.</p>
+
+                <h4>2. Prompt detail has a Goldilocks zone</h4>
+                <p>More context doesn&rsquo;t mean better answers. The tightest cross-model agreement came from <strong>moderately detailed prompts</strong> (Runs 2 through 4: org budget, role level, team scope) with CVs of just 6.0&ndash;6.3%.</p>
+                <p>Adding sector-specific framing (Run 5) caused <strong>variability to jump to 22.6%</strong>, driven by Haiku returning $186K when the other models said $108K&ndash;$120K. And pasting a <strong>full job description (Run 7) made things worse</strong>, with CV jumping to 21.2%. More detail gave models more surface area to disagree on, not less.</p>
+                <p><strong>The sweet spot?</strong> Include org budget, role level, reporting line, and team size. Stop there.</p>
+                <img src="images/model-variability-by-prompt-detail.png" alt="Claude Salary Benchmarking: Run-to-Run Variability by Prompt Detail Level" class="blog-img">
+
+                <h4>3. Ask the same question tomorrow, get a different answer</h4>
+                <p>The most unsettling finding: identical prompts in separate incognito sessions produced different answers. Opus and Sonnet averaged a <strong>$5,000 shift (4&ndash;5%)</strong> between sessions, but swung up to <strong>$18K&ndash;$20K</strong> on their worst prompts. Haiku averaged a <strong>$23,000 shift</strong>, with a worst case of <strong>$61,000</strong>.</p>
+                <p>Even the perfect prompt has built-in randomness that no amount of engineering eliminates.</p>
+
+                <h3>The Most Reliable Configuration I Found</h3>
+                <p><strong>Model:</strong> Sonnet 4.6 (paid, mid-tier)<br>
+                <strong>Prompt level:</strong> Run 4, including org budget, role level, reporting line, team size, and portfolio scope<br>
+                <strong>Result:</strong> $115,000 midpoint on both sessions, perfectly reproducible</p>
+                <p><strong>Runner-up:</strong> Opus on sector framing and bilingual prompts (Runs 5&ndash;6) returned identical midpoints of $120K&ndash;$126K. The premium model stabilizes, but only with very specific sector context.</p>
+
+                <h3>So Should You Use AI to Benchmark Your Salary?</h3>
+                <p><strong>AI is useful as a conversation starter, not a source of truth.</strong> If Claude says your midpoint is $115K and you&rsquo;re making $85K, that&rsquo;s a signal worth investigating. But it&rsquo;s not evidence.</p>
+                <p><strong>What AI can do well:</strong> give you a rough sanity check on order of magnitude, help you think through what factors affect your market value, and generate a starting framework for a compensation conversation.</p>
+                <p><strong>What AI cannot do:</strong> replace actual compensation survey data (Radford, Mercer, Compdata, or nonprofit-specific sources like the FairPay Collaborative), give you a defensible number for a negotiation, or be consistent enough to compare across colleagues.</p>
+
+                <h3>The Bottom Line</h3>
+                <p>If your salary is $100,000, Claude&rsquo;s best guess for your market rate could land anywhere from <strong>$95,000 to $186,000</strong>. Even with paid models and a well-crafted prompt, you&rsquo;re looking at a <strong>&plusmn;5&ndash;20% margin of error</strong>.</p>
+                <p>That&rsquo;s not &ldquo;wrong&rdquo; in the way a broken calculator is wrong. It&rsquo;s unreliable in the way a friend who &ldquo;has read the Wikipedia article&rdquo; is unreliable. Useful for orienting yourself. Dangerous if you treat it as ground truth.</p>
+
+                <p class="blog-methodology"><em>Methodology: 42 total observations (7 prompt levels &times; 3 Claude models &times; 2 independent sessions). Each session used a fresh incognito browser window. Opus and Sonnet tested via paid Claude Max subscription; Haiku via free account. All prompts asked for fixed Range Min, Midpoint, and Range Max values. Analysis focused on midpoint as the primary reliability metric.</em></p>
+            </article>
+
             <article class="blog-post" id="llm-benchmarks">
                 <div class="blog-post-date">March 2, 2026</div>
-                <h2>Can LLMs Produce Reliable Market Benchmarks? A Small Pilot Study</h2>
+                <h2><a href="#llm-benchmarks">Can LLMs Produce Reliable Market Benchmarks? A Small Pilot Study</a></h2>
                 <p><em>Question: Can LLMs produce market benchmarks that are reliable enough to inform real compensation decisions (and if so, where does it break down)? Put another way: has AI gotten "good enough" to replace compiled surveys or comp databases?</em></p>
                 <p><strong>TL;DR</strong> In a pilot test using 15 common nonprofit roles scoped to San Francisco nonprofits (25&ndash;50 FTE), LLM-generated market medians tracked &ldquo;paper survey&rdquo; benchmarks closely (high agreement on role ordering and relative differentials), but diverged more from leading national compensation databases, especially for executive roles. In other words, LLMs do a good job ranking pay rates between jobs but are probably less accurate at giving you a true &ldquo;range&rdquo; in the absence of other org context. My recommendation: use LLMs for quick triangulation (&ldquo;do Controller or Sr. Director of Finance typically pay more at Oakland nonprofits?&rdquo;), job-matching sanity checks, and early range development. Do not use them as a single source of truth for pricing decisions, and always calibrate with at least one traditional benchmark source, especially above the director level.</p>
 
@@ -219,9 +292,9 @@
                 </table>
             </article>
 
-            <article class="blog-post">
+            <article class="blog-post" id="welcome">
                 <div class="blog-post-date">February 25, 2026</div>
-                <h2>Welcome to the Thruline Blog</h2>
+                <h2><a href="#welcome">Welcome to the Thruline Blog</a></h2>
                 <p>I'm excited to launch this blog as a space to share insights, research, and practical guidance on compensation design for mission-driven organizations.</p>
                 <p>Over the coming months, I'll be writing about topics like:</p>
                 <ul>
