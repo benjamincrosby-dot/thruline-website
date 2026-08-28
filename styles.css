@@ -700,6 +700,21 @@ p {
     font-weight: 500;
 }
 
+.form-error {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.form-error a {
+    color: #721c24;
+    text-decoration: underline;
+}
+
 /* Client Logos Section */
 .clients {
     padding: 60px 0;

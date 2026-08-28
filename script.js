@@ -97,33 +97,55 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contact-form');
     const formSuccess = document.getElementById('form-success');
 
+    const formError = document.getElementById('form-error');
+
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Get form data
-            const formData = new FormData(contactForm);
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn ? submitBtn.textContent : '';
 
-            // Log form data (in production, this would be sent to a server)
-            console.log('Form submitted:', data);
+            // Reset any prior messages and show a sending state
+            if (formError) formError.hidden = true;
+            if (formSuccess) formSuccess.hidden = true;
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+            }
 
-            // Show success message
-            formSuccess.hidden = false;
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(contactForm)
+                });
+                const result = await response.json();
 
-            // Reset form
-            contactForm.reset();
-
-            // Scroll to success message
-            formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                formSuccess.hidden = true;
-            }, 5000);
+                if (response.ok && result.success) {
+                    // Show success message
+                    formSuccess.hidden = false;
+                    contactForm.reset();
+                    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setTimeout(() => {
+                        formSuccess.hidden = true;
+                    }, 8000);
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch (err) {
+                // Show error message so the visitor isn't given a false success
+                console.error('Contact form submission failed:', err);
+                if (formError) {
+                    formError.hidden = false;
+                    formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
+                }
+            }
         });
     }
 
